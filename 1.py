@@ -37,6 +37,20 @@ class Book:
         else:
             print("Agrega mas libros.\n")
 
+    def add_books(self):
+        new_book = {}
+        new_book["id"] = len(Book.books) + 1
+        new_book["Title"] = self.title
+        new_book["Genre"] = self.genre
+        new_book["ISBN"] = self.isbn
+        new_book["Publisher"] = self.publisher
+        new_book["Author"] = self.author
+
+        Book.books.append(new_book)
+        return Book.books
+
+    
+
 if __name__ == "__main__":
     def run_pogram():
         print("Bievenido a mi pograma:")
@@ -69,4 +83,15 @@ if __name__ == "__main__":
             my_class = Book()
             my_class.list_books()
             my_class.continue_pogram()
+            
+        elif option == "3":
+            title = input("¿Cual es el nombre del libro?\n")
+            genre = input("¿Que tipo de genero es?\n")
+            isbn = input("¿Cual es su ISBN?\n")
+            publisher = input("¿Cual es la editorial del libro?\n")
+            author = input("¿Quien o Quienes son los autores? (Si es mas de un author separar por comas)\n")
+            my_class = Book(title=title, genre=genre, isbn=isbn, publisher=publisher, author= author)
+            print(my_class.add_books())
+            my_class.continue_pogram()
+            
     run_pogram()
