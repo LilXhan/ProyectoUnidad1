@@ -26,6 +26,17 @@ class Book:
             print("Ingrese un formato de archivo adecuado (csv).\n")
             run_pogram()
 
+    def list_books(self):
+        if len(Book.books) != 0:
+            print("Lista de Libros:\n")
+            cont = 1
+            for book in Book.books:
+                book = book["Title"]
+                print(f"{cont}) {book}")
+                cont += 1
+        else:
+            print("Agrega mas libros.\n")
+
 if __name__ == "__main__":
     def run_pogram():
         print("Bievenido a mi pograma:")
@@ -53,4 +64,9 @@ if __name__ == "__main__":
                 book = book['Title']
                 print(f"El libro {book} fue añadido.")
             # my_class.continue_pogram()
+            
+        elif option == "2":
+            my_class = Book()
+            my_class.list_books()
+            my_class.continue_pogram()
     run_pogram()
