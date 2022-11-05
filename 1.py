@@ -275,8 +275,24 @@ class Book:
             csvwriter = csv.writer(csvfile)
             csvwriter.writerows(Book.books)
             print(f"La informacion de sus libros fue guarda en saved{filename}. Gracias por usar mi pograma!")
+       
+    def continue_pogram(self):
+        decision = input("¿Desea continuar el pograma? (Y/N)\n")
+        decision = decision.lower()
+        while not decision in "yn":
+            decision = input("Y(Si) o N(No)\n")
+        if decision == 'y':
+            run_pogram()
+        else:
+            saved = input("¿Deseas guardar la informacion de tus libros? (Y/N)\n")
+            while not saved.lower() in 'yn':
+                saved = input("Ingrese una consonante: Y(Si) o N(No)\n")
+            if saved == 'y':
+                my_class = Book() 
+                my_class.saved_books()
+            else:
+                print("Espero que te haya gustado mi pograma.")
     
-
 if __name__ == "__main__":
     def run_pogram():
         print("Bievenido a mi pograma:")
@@ -303,7 +319,7 @@ if __name__ == "__main__":
             for book in data:
                 book = book['Title']
                 print(f"El libro {book} fue añadido.")
-            # my_class.continue_pogram()
+            my_class.continue_pogram()
             
         elif option == "2":
             my_class = Book()
@@ -350,7 +366,7 @@ if __name__ == "__main__":
             my_class = Book()
             my_class.update_books()
             my_class.continue_pogram()
-            
+
         else:
             my_class = Book()
             my_class.saved_books()
