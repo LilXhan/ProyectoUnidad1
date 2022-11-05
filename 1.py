@@ -49,7 +49,22 @@ class Book:
         Book.books.append(new_book)
         return Book.books
 
-    
+    def delete_books(self):
+        books = list(map(lambda x:x["Title"], Book.books))
+        count = 1
+        for book in books:
+            print(f"{count}) {book}.")
+            count += 1
+        decision = input("¿Cual libro desea eliminar de la lista?\n"
+              "Escoge su número de orden:\n")
+        decision = int(decision)
+
+        
+        while not decision in range(1, len(books) + 1):
+            decision = input(f"Ingresa un número del 1 al {len(books)}:\n")
+        
+        del Book.books[decision - 1]
+        return Book.books
 
 if __name__ == "__main__":
     def run_pogram():
@@ -92,6 +107,11 @@ if __name__ == "__main__":
             author = input("¿Quien o Quienes son los autores? (Si es mas de un author separar por comas)\n")
             my_class = Book(title=title, genre=genre, isbn=isbn, publisher=publisher, author= author)
             print(my_class.add_books())
+            my_class.continue_pogram()
+            
+        elif option == "4":
+            my_class = Book()
+            print(my_class.delete_books())
             my_class.continue_pogram()
             
     run_pogram()
