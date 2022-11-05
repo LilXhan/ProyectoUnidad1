@@ -117,6 +117,48 @@ class Book:
             else:
                 run_pogram()
 
+        def find_books_autor(self):
+            authors = list(map(lambda x:x["Author"], Book.books))
+            publishers = list(map(lambda x:x["Publisher"], Book.books))
+            geners = list(map(lambda x:x["Genre"], Book.books))
+            def print_books(list, list_2, list_3):
+                str = " Autor(es) -> Genero -> Editorial\n"
+                for x, y, z in zip(list, list_2, list_3):
+                    str += f" {x} -> {y} -> {z}.\n"
+                return str
+            title = input("Ingrese un nombre, genero o editorial de la siguiente lista:\n"
+                        f"{print_books(authors, geners, publishers)}")
+            
+            def verificar_option(title, books):
+                for item in books:
+                    if title.lower() == item.lower():
+                        return item
+                return False
+            def verificar_author(author, books):
+                for item in books:
+                    world = item.lower()
+                    if world.count(author.lower()):
+                        return item
+                return False
+            try:
+                find_title = list(filter(lambda x:x["Author"] == f"{verificar_author(title, authors)}" or
+                x["Publisher"] == f"{verificar_option(title, publishers)}" or x["Genre"] == f"{verificar_option(title, geners)}", Book.books))
+
+                title = find_title[0]["Title"]
+                gender = find_title[0]["Genre"]
+                isbn = find_title[0]["ISBN"]
+                publisher = find_title[0]["Publisher"]
+                author = find_title[0]["Author"]
+
+                print(f"Los datos del libro {title} son:\n"
+                        f"Titulo: {title}\n"
+                        f"Genero: {gender}\n"
+                        f"ISBN: {isbn}\n"
+                        f"Editorial: {publisher}\n"
+                        f"Autor(es): {author}\n")
+            except:
+                print("El libro no fue encontrado, si gustas puedes agregarlo.")
+
 if __name__ == "__main__":
     def run_pogram():
         print("Bievenido a mi pograma:")
@@ -174,6 +216,10 @@ if __name__ == "__main__":
             my_class = Book()
             my_class.order_books()
             my_class.continue_pogram()
-        
+            
+        elif option == "7":
+            my_class = Book()
+            my_class.find_books_autor()
+            my_class.continue_pogram()
             
     run_pogram()
