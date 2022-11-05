@@ -101,6 +101,22 @@ class Book:
         except:
             print("El libro no fue encontrado, si gustas puedes agregarlo.")
 
+        def order_books(self):
+            if len(Book.books) != 0:
+                decision = input("¿Desea ordenar los titulos de los libros por orden alfabetico? (Y/N)\n")
+                while not decision.lower() in 'yn':
+                    decision = input("¿Desea ordenar los titulos de los libros por orden alfabetico?\n"
+                             "Y(Si) o (N)No\n")
+            if decision == 'y':
+                titles = list(map(lambda x:x["Title"], Book.books))
+                titles.sort()
+                cont = 1
+                for book in titles:
+                    print(f"{cont}) {book}")
+                    cont += 1
+            else:
+                run_pogram()
+
 if __name__ == "__main__":
     def run_pogram():
         print("Bievenido a mi pograma:")
@@ -152,6 +168,11 @@ if __name__ == "__main__":
         elif option == "5":
             my_class = Book()
             my_class.find_books_title()
+            my_class.continue_pogram()
+
+        elif option == "6":
+            my_class = Book()
+            my_class.order_books()
             my_class.continue_pogram()
         
             
