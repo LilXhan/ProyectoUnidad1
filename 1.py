@@ -184,6 +184,19 @@ class Book:
             return str
         print(f"Libros que tiene {num} autor(es):\n"
               f"{print_author(books_filter)}")
+
+    def saved_books(self):
+        filename = input("Ingrese el tipo de extension en el cual desea guardar toda la informacion sobre sus libros:\n"
+                         "1) .txt\n"
+                         "2) .csv\n")
+        if filename == "1":
+            filename = ".txt"
+        else:
+            filename = ".csv"
+        with open(f"saved.{filename}", 'w') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerows(Book.books)
+            print(f"La informacion de sus libros fue guarda en saved{filename}. Gracias por usar mi pograma!")
     
 
 if __name__ == "__main__":
@@ -254,5 +267,9 @@ if __name__ == "__main__":
             my_class = Book()
             my_class.find_books_numbers_autors(num)
             my_class.continue_pogram()
+
+        else:
+            my_class = Book()
+            my_class.saved_books()
             
     run_pogram()
