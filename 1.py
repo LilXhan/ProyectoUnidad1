@@ -158,6 +158,33 @@ class Book:
                     f"Autor(es): {author}\n")
         except:
             print("El libro no fue encontrado, si gustas puedes agregarlo.")
+    
+    def find_books_numbers_autors(self, num):
+        authors = list(map(lambda x: x["Author"], Book.books))
+        new_list = []
+        list_authors = []
+        for author in authors:
+            author_v2 = author.split(",")
+            if len(author_v2) == int(num):
+                new_list.append(author_v2)
+
+        for x in range(len(new_list)):
+            var = ",".join(new_list[x])
+            find_books_number_authors = next(filter(lambda x:x["Author"] == var, Book.books))
+            list_authors.append(find_books_number_authors)
+
+        books_filter = list(map(lambda x:x["Title"], list_authors))
+
+        def print_author(list):
+            count = 1
+            str = ""
+            for item in list:
+                str += f"{count}) {item}.\n"
+                count += 1
+            return str
+        print(f"Libros que tiene {num} autor(es):\n"
+              f"{print_author(books_filter)}")
+    
 
 if __name__ == "__main__":
     def run_pogram():
@@ -220,6 +247,12 @@ if __name__ == "__main__":
         elif option == "7":
             my_class = Book()
             my_class.find_books_autor()
+            my_class.continue_pogram()
+            
+        elif option == "8":
+            num = input("Ingrese el número de autores:\n")
+            my_class = Book()
+            my_class.find_books_numbers_autors(num)
             my_class.continue_pogram()
             
     run_pogram()
