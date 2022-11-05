@@ -184,6 +184,84 @@ class Book:
             return str
         print(f"Libros que tiene {num} autor(es):\n"
               f"{print_author(books_filter)}")
+    
+    def update_books(self):
+        books = list(map(lambda x:x["Title"], Book.books))          
+        def print_author(list):
+            count = 1
+            str = ""
+            for item in list:
+                str += f"{count}) {item}.\n"
+                count += 1
+            return str
+
+        try:
+            decision = int(input(f"Elige uno de estos libros para editar su información:\n"
+              f"{print_author(books)}"))
+
+            while not int(decision) in range(len(books) + 1):
+                decision = input(f"Elige uno de estos libros para editar su información:\n"
+                f"{print_author(books)}")    
+
+            book_edit = list(filter(lambda x:x["Title"] == books[decision - 1], Book.books))
+            
+            book_name = book_edit[0]["Title"]
+
+            try:
+                edit = input(f"¿Del libro {book_name} que desea editar?\n"
+                            "1) Titulo. \n"
+                            "2) Genero.\n"
+                            "3) ISBN.\n"
+                            "4) Editorial.\n"
+                            "5) Autor(es).\n"
+                            "Escoja una opcion del 1 al 5:\n")
+                
+                while not edit in '12345':
+                    edit = input("Escoja una opcion del 1 al 5:\n")
+
+                count = 0
+
+                for book in Book.books:
+                    if book["Title"] == book_name:
+                        break
+                    count += 1
+
+                if edit == "1":
+                    Book.books[count]["Title"] = input(f"¿El titulo {book_name} por cual desea cambiarlo?\n")
+                    new_name= Book.books[count]["Title"]
+                    # agregar cargando
+                    print(f"El litulo del libro fue cambiado de {book_name} a {new_name} con exito!")
+
+                elif edit == "2":
+                    genre_book = Book.books[count]["Genre"] 
+                    Book.books[count]["Genre"] = input(f"¿El genero del libro {book_name} que es {genre_book} por cual desea cambiarlo?\n")
+                    new_genre_book = Book.books[count]["Genre"] 
+                    # agregar cargando
+                    print(f"El genero del libro {book_name}, fue cambiado por {new_genre_book}")
+
+                elif edit == "3":
+                   isbn_book = Book.books[count]["ISBN"]
+                   Book.books[count]["ISBN"] = input(f"¿El ISBN: {isbn_book} del libro {book_name} por cual desea cambiarlo?\n")
+                   # agregar cargando
+                   print(f"El ISBN del libro {book_name} fue cambiado con exito!")
+
+                elif edit == "4":
+                    publisher_book = Book.books[count]["Publisher"] 
+                    Book.books[count]["Publisher"] = input(f"La editorial del libro {book_name} es: {publisher_book} ¿Por cual desea cambiarlo?\n")
+                    # agregar cargando
+                    print(f"La editorial del libro {book_name}, fue cambiado con exito!")
+
+                else:
+                    author_book = Book.books[count]["Author"] 
+                    Book.books[count]["Author"] = input(f"Autor(es) de este libro: {author_book} ¿Por cuales deseas cambiarlos?\n"
+                                                         "Si es mas de 1 autor, ingresa los nombres separados por coma.\n")
+                    #agregar cargando
+                    print(f"Autor(es) del libro {book_name} fue o fueron cambiados con exito!")
+            
+            except:
+                run_pogram()
+        except:
+            run_pogram()
 
     def saved_books(self):
         filename = input("Ingrese el tipo de extension en el cual desea guardar toda la informacion sobre sus libros:\n"
@@ -268,6 +346,11 @@ if __name__ == "__main__":
             my_class.find_books_numbers_autors(num)
             my_class.continue_pogram()
 
+        elif option == "9":
+            my_class = Book()
+            my_class.update_books()
+            my_class.continue_pogram()
+            
         else:
             my_class = Book()
             my_class.saved_books()
