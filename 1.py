@@ -20,6 +20,19 @@ class Book:
             count += 1
         return str_book
 
+    def asnwer_add(self, func):
+        print(f"No tienes ningun libro para {func}.")
+        opcion = input("¿Desea agregar un libro? (Y / N)\n")
+
+        while not opcion.lower() in ("y", "n"):
+            opcion = input("Y o N.\n")
+
+        if opcion.lower() == 'y':
+            my_class = Book()
+            my_class.add_books()
+        else:
+            my_class = Book()
+            my_class.continue_pogram()  
 
     def read_archive(self):
         try:
@@ -35,10 +48,11 @@ class Book:
                     row = zip(keys, line)
                     row = dict(row)
                     Book.books.append(row)
+                str = ""
                 for book in Book.books:
                     book = book["Title"]
-                    print(f"El libro {book} fue agregado con exito!")
-            return Book.books
+                    str += f"El libro {book} fue agregado con exito!\n"
+                return str
         except:
             print('Ups! El formato que mando no parece el adecuado asegurese de ingresar un formato parecido al de "example.csv"\n'
             'que se encuentra en la misma carpeta de este repositorio de github. Tambien asegurese que contenga\n'
@@ -53,18 +67,8 @@ class Book:
             print("Los libros que tienes guardado son los siguientes:")
             print(my_class.print_books(books_list))
         else:
-            print("No tienes ningun libro para listar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("listar")
 
     def add_books(self):
         title = input("¿Cual es el nombre del libro?\n")
@@ -88,18 +92,8 @@ class Book:
 
     def delete_books(self):
         if len(Book.books) == 0:
-            print("No tienes ningun libro para eliminar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("eliminar")
         else:
             books = list(map(lambda x:x["Title"], Book.books))
             
@@ -119,18 +113,8 @@ class Book:
     
     def find_books_title(self):
         if len(Book.books) == 0:
-            print("No tienes ningun libro para buscar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("buscar")
         else:
             titles = list(map(lambda x:x["Title"], Book.books))
             ibns = list(map(lambda x: x["ISBN"], Book.books))
@@ -168,18 +152,8 @@ class Book:
 
     def order_books(self):
         if len(Book.books) == 0:
-            print("No tienes ningun libro para ordenar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("ordenar")
         else:
             decision = input("¿Desea ordenar los titulos de los libros por orden alfabetico? (Y/N)\n")
             while not decision.lower() in 'yn':
@@ -199,18 +173,8 @@ class Book:
 
     def find_books_autor(self):
         if len(Book.books) == 0:
-            print("No tienes ningun libro para buscar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("buscar")
         else:
             authors = list(map(lambda x:x["Author"], Book.books))
             publishers = list(map(lambda x:x["Publisher"], Book.books))
@@ -255,18 +219,8 @@ class Book:
     
     def find_books_numbers_autors(self):
         if len(Book.books) == 0:
-            print("No tienes ningun libro para buscar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("buscar")
         else:
             num = input("Ingrese el número de autores:\n")
             authors = list(map(lambda x: x["Author"], Book.books))
@@ -284,101 +238,87 @@ class Book:
 
             books_filter = list(map(lambda x:x["Title"], list_authors))
 
-            def print_author(list):
-                count = 1
-                str = ""
-                for item in list:
-                    str += f"{count}) {item}.\n"
-                    count += 1
-                return str
+            my_class = Book()
             print(f"Libros que tiene {num} autor(es):\n"
-                f"{print_author(books_filter)}")
+                f"{my_class.print_books(books_filter)}")
     
     def update_books(self):
         if len(Book.books) == 0:
-            print("No tienes ningun libro para buscar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
-            else:
-                my_class = Book()
-                my_class.continue_pogram()  
+            my_class = Book()
+            my_class.asnwer_add("actualizar")
         else:
             books = list(map(lambda x:x["Title"], Book.books))          
             my_class = Book()
 
-            try:
-                decision = int(input(f"Elige uno de estos libros para editar su información:\n"
-                f"{my_class.print_books(books)}"))
+            decision = input(f"Elige uno de estos libros para editar su información:\n"
+            f"{my_class.print_books(books)}")
 
-                while not int(decision) in range(len(books) + 1):
-                    decision = input(f"Elige uno de estos libros para editar su información:\n"
-                    f"{my_class.print_books(books)}")    
+            number_books = [str(i) for i in range(len(books) + 1)]
 
-                book_edit = list(filter(lambda x:x["Title"] == books[decision - 1], Book.books))
+            while not decision in number_books:
+                decision = input(f"Elige uno de estos libros para editar su información:\n"
+                f"{my_class.print_books(books)}")  
+
+            decision = int(decision)
+
+            book_edit = list(filter(lambda x:x["Title"] == books[decision - 1], Book.books))
                 
-                book_name = book_edit[0]["Title"]
+            book_name = book_edit[0]["Title"]
 
-                try:
-                    edit = input(f"¿Del libro {book_name} que desea editar?\n"
-                                "1) Titulo. \n"
-                                "2) Genero.\n"
-                                "3) ISBN.\n"
-                                "4) Editorial.\n"
-                                "5) Autor(es).\n"
-                                "Escoja una opcion del 1 al 5:\n")
-                    
-                    while not edit in '12345':
+            edit = input(f"¿Del libro {book_name} que desea editar?\n"
+                            "1) Titulo. \n"
+                            "2) Genero.\n"
+                            "3) ISBN.\n"
+                            "4) Editorial.\n"
+                            "5) Autor(es).\n"
+                            "Escoja una opcion del 1 al 5:\n")
+            
+            options = [str(i) for i in range(6)]
+
+            while not str(edit) in options:
                         edit = input("Escoja una opcion del 1 al 5:\n")
 
-                    count = 0
+            edit = int(edit)
 
-                    for book in Book.books:
-                        if book["Title"] == book_name:
-                            break
-                        count += 1
+            count = 0
 
-                    if edit == "1":
-                        Book.books[count]["Title"] = input(f"¿El titulo {book_name} por cual desea cambiarlo?\n")
-                        new_name= Book.books[count]["Title"]
-                        # agregar cargando
-                        print(f"El litulo del libro fue cambiado de {book_name} a {new_name} con exito!")
+            for book in Book.books:
+                if book["Title"] == book_name:
+                    break
+                count += 1
 
-                    elif edit == "2":
-                        genre_book = Book.books[count]["Genre"] 
-                        Book.books[count]["Genre"] = input(f"¿El genero del libro {book_name} que es {genre_book} por cual desea cambiarlo?\n")
-                        new_genre_book = Book.books[count]["Genre"] 
-                        # agregar cargando
-                        print(f"El genero del libro {book_name}, fue cambiado por {new_genre_book}")
+            if edit == "1":
+                Book.books[count]["Title"] = input(f"¿El titulo {book_name} por cual desea cambiarlo?\n")
+                new_name= Book.books[count]["Title"]
+                # agregar cargando
+                print(f"El litulo del libro fue cambiado de {book_name} a {new_name} con exito!")
 
-                    elif edit == "3":
-                        isbn_book = Book.books[count]["ISBN"]
-                        Book.books[count]["ISBN"] = input(f"¿El ISBN: {isbn_book} del libro {book_name} por cual desea cambiarlo?\n")
-                        # agregar cargando
-                        print(f"El ISBN del libro {book_name} fue cambiado con exito!")
+            elif edit == "2":
+                genre_book = Book.books[count]["Genre"] 
+                Book.books[count]["Genre"] = input(f"¿El genero del libro {book_name} que es {genre_book} por cual desea cambiarlo?\n")
+                new_genre_book = Book.books[count]["Genre"] 
+                # agregar cargando
+                print(f"El genero del libro {book_name}, fue cambiado por {new_genre_book}")
 
-                    elif edit == "4":
-                        publisher_book = Book.books[count]["Publisher"] 
-                        Book.books[count]["Publisher"] = input(f"La editorial del libro {book_name} es: {publisher_book} ¿Por cual desea cambiarlo?\n")
-                        # agregar cargando
-                        print(f"La editorial del libro {book_name}, fue cambiado con exito!")
+            elif edit == "3":
+                isbn_book = Book.books[count]["ISBN"]
+                Book.books[count]["ISBN"] = input(f"¿El ISBN: {isbn_book} del libro {book_name} por cual desea cambiarlo?\n")
+                # agregar cargando
+                print(f"El ISBN del libro {book_name} fue cambiado con exito!")
 
-                    else:
-                        author_book = Book.books[count]["Author"] 
-                        Book.books[count]["Author"] = input(f"Autor(es) de este libro: {author_book} ¿Por cuales deseas cambiarlos?\n"
+            elif edit == "4":
+                publisher_book = Book.books[count]["Publisher"] 
+                Book.books[count]["Publisher"] = input(f"La editorial del libro {book_name} es: {publisher_book} ¿Por cual desea cambiarlo?\n")
+                # agregar cargando
+                print(f"La editorial del libro {book_name}, fue cambiado con exito!")
+
+            else:
+                author_book = Book.books[count]["Author"] 
+                Book.books[count]["Author"] = input(f"Autor(es) de este libro: {author_book} ¿Por cuales deseas cambiarlos?\n"
                                                             "Si es mas de 1 autor, ingresa los nombres separados por coma.\n")
-                        #agregar cargando
-                        print(f"Autor(es) del libro {book_name} fue o fueron cambiados con exito!")
+                #agregar cargando
+                print(f"Autor(es) del libro {book_name} fue o fueron cambiados con exito!")
                 
-                except:
-                    run_pogram()
-            except:
-                run_pogram()
 
     def saved_books(self):
         filename = input("Ingrese el tipo de extension en el cual desea guardar toda la informacion sobre sus libros:\n"
@@ -394,39 +334,25 @@ class Book:
             print(f"La informacion de sus libros fue guarda en saved{filename}. Gracias por usar mi pograma!")
        
     def continue_pogram(self):
-        if len(Book.books) == 0:
-            print("No tienes ningun libro para buscar, agregue un libro.")
-            opcion = input("¿Desea agregar un libro? (Y / N)\n")
-
-            while not opcion.lower() in ("y", "n"):
-                opcion = input("Y o N.\n")
-
-            if opcion.lower() == 'y':
-                my_class = Book()
-                my_class.add_books()
+        decision = input("¿Desea continuar el pograma? (Y/N)\n")
+        decision = decision.lower()
+        while not decision in "yn":
+            decision = input("Y(Si) o N(No)\n")
+        if decision == 'y':
+            run_pogram()
+        else:
+            saved = input("¿Deseas guardar la informacion de tus libros? (Y/N)\n")
+            while not saved.lower() in 'yn':
+                saved = input("Ingrese una consonante: Y(Si) o N(No)\n")
+            if saved == 'y' and len(Book.books) > 0:
+                my_class = Book() 
+                my_class.saved_books()
+            elif saved == 'n':
+                print("Espero que te haya gustado mi pograma.")
+                exit()
             else:
-                my_class = Book()
-                my_class.continue_pogram() 
-        else: 
-            decision = input("¿Desea continuar el pograma? (Y/N)\n")
-            decision = decision.lower()
-            while not decision in "yn":
-                decision = input("Y(Si) o N(No)\n")
-            if decision == 'y':
-                run_pogram()
-            else:
-                saved = input("¿Deseas guardar la informacion de tus libros? (Y/N)\n")
-                while not saved.lower() in 'yn':
-                    saved = input("Ingrese una consonante: Y(Si) o N(No)\n")
-                if saved == 'y' and len(Book.books) > 0:
-                    my_class = Book() 
-                    my_class.saved_books()
-                elif saved == 'n':
-                    print("Espero que te haya gustado mi pograma.")
-                    exit()
-                else:
-                    print("No tiene ningun libro para guardar.")
-                    exit()
+                print("No tiene ningun libro para guardar.")
+                exit()
     
 if __name__ == "__main__":
     def run_pogram():
@@ -451,7 +377,7 @@ if __name__ == "__main__":
             
         if option == "1":
             my_class = Book()
-            my_class.read_archive()
+            print(my_class.read_archive())
             my_class.continue_pogram()
                 
         elif option == "2":
