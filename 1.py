@@ -262,7 +262,7 @@ class Book:
             decision = int(decision)
 
             book_edit = list(filter(lambda x:x["Title"] == books[decision - 1], Book.books))
-                
+               
             book_name = book_edit[0]["Title"]
 
             edit = input(f"¿Del libro {book_name} que desea editar?\n"
@@ -271,47 +271,31 @@ class Book:
                             "3) ISBN.\n"
                             "4) Editorial.\n"
                             "5) Autor(es).\n"
-                            "Escoja una opcion del 1 al 5:\n")
-            
+                            "Escoja una opcion del 1 al 5:\n")            
             options = [str(i) for i in range(6)]
-
-            while not str(edit) in options:
+            while not edit in options:
                         edit = input("Escoja una opcion del 1 al 5:\n")
 
-            edit = int(edit)
-
             count = 0
-
             for book in Book.books:
                 if book["Title"] == book_name:
                     break
                 count += 1
 
+            def edit_sel(edit_name, name):
+                Book.books[count][edit_name] = input(f"¿El {name} de {book_name} por cual desea cambiarlo?\n")
+                new_name = Book.books[count][edit_name]
+                # agregar cargando
+                return f"¡El {name} del libro {book_name} fue cambiado por {new_name} con exito!"
+
             if edit == "1":
-                Book.books[count]["Title"] = input(f"¿El titulo {book_name} por cual desea cambiarlo?\n")
-                new_name= Book.books[count]["Title"]
-                # agregar cargando
-                print(f"El litulo del libro fue cambiado de {book_name} a {new_name} con exito!")
-
+                print(edit_sel("Title", "titulo"))
             elif edit == "2":
-                genre_book = Book.books[count]["Genre"] 
-                Book.books[count]["Genre"] = input(f"¿El genero del libro {book_name} que es {genre_book} por cual desea cambiarlo?\n")
-                new_genre_book = Book.books[count]["Genre"] 
-                # agregar cargando
-                print(f"El genero del libro {book_name}, fue cambiado por {new_genre_book}")
-
+                print(edit_sel("Genre", "genero"))
             elif edit == "3":
-                isbn_book = Book.books[count]["ISBN"]
-                Book.books[count]["ISBN"] = input(f"¿El ISBN: {isbn_book} del libro {book_name} por cual desea cambiarlo?\n")
-                # agregar cargando
-                print(f"El ISBN del libro {book_name} fue cambiado con exito!")
-
+                print(edit_sel("ISBN", "ISBN"))
             elif edit == "4":
-                publisher_book = Book.books[count]["Publisher"] 
-                Book.books[count]["Publisher"] = input(f"La editorial del libro {book_name} es: {publisher_book} ¿Por cual desea cambiarlo?\n")
-                # agregar cargando
-                print(f"La editorial del libro {book_name}, fue cambiado con exito!")
-
+                print(edit_sel("Publisher", "publicador o la editorial"))
             else:
                 author_book = Book.books[count]["Author"] 
                 Book.books[count]["Author"] = input(f"Autor(es) de este libro: {author_book} ¿Por cuales deseas cambiarlos?\n"
