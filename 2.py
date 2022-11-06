@@ -84,6 +84,46 @@ def option_2_shape():
         except:
             print('error')
 
+def option_3_ability(): 
+    #print abilities    
+    r = 'https://pokeapi.co/api/v2/ability/'
+    rq = requests.get(r)
+    data = rq.json()
+    for c, i in enumerate(data['results']):
+        n = i['name']
+        print(f'{c+1}) {n}')
+
+    continue_fun = True
+    while continue_fun == True:
+        try:
+            n_Ability= input('Escribe el nombre o el id de la habilidad, puedes usar estas habilidades como referencia: ').lower()
+            if n_Ability == 'exit':
+                continue_fun == False
+                break
+        
+            url = f'https://pokeapi.co/api/v2/ability/{str(n_Ability)}'
+            res = requests.get(url)
+            data23 = res.json()
+            result1 = data23.get('pokemon',[])
+            if result1:
+                for i in result1:
+                    namePoke = i['pokemon']['name']
+                    url4 = f"https://pokeapi.co/api/v2/pokemon/{namePoke}"
+                    res4 = requests.get(url4)
+                    data4 = res4.json()
+                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{data4['id']}.png"
+                    abilities = [i['ability']['name'] for i in data4['abilities']]
+                
+                    print(f'name: {namePoke}')
+                    print(f'Image: {image}')
+                    print(f'ability: {abilities}')
+                    print('-----------------------------------------')
+            else:
+                print("Esta es una habilidad no oficial en la serie")
+        
+        except:
+            print('error')
+
 
 def main():
     
@@ -101,7 +141,8 @@ def main():
                 option_1_generations()
             elif opcion_escogida == '2':
                 option_2_shape()    
-            
+            elif opcion_escogida == '3':
+                option_3_ability() 
             
             continue
         except:
