@@ -46,6 +46,44 @@ def option_1_generations():
             print('error')
 
 
+def option_2_shape():
+    request = requests.get(f'https://pokeapi.co/api/v2/pokemon-shape/')
+    data = request.json()
+        
+    for c, i in enumerate(data['results']):
+        n = i['name']
+        print(f'{c+1}) {n}')
+
+    continue_fun = True
+    while continue_fun == True:
+        try:
+            decision = input('Escribe el numero de habitat que quieres listar: ').lower()
+            if decision == 'exit':
+                continue_fun == False
+                break
+            
+            url = f'https://pokeapi.co/api/v2/pokemon-shape/{decision}'
+            res = requests.get(url)
+            data23 = res.json()
+            result1 = data23.get('pokemon_species',[])
+            
+            if result1:
+                for i in result1:
+                    namePoke = i['name']
+                    url4 = f"https://pokeapi.co/api/v2/pokemon/{namePoke}"
+                    res4 = requests.get(url4)
+                    data4 = res4.json()
+                    abilities = [i['ability']['name'] for i in data4['abilities']]
+                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{data4['id']}.png"
+                    
+                    print(f'name: {namePoke}')
+                    print(f'ability: {abilities}')
+                    print(f'Image: {image}')
+                    print('-----------------------------------------')
+            
+        except:
+            print('error')
+
 
 def main():
     
@@ -61,6 +99,9 @@ def main():
             
             if opcion_escogida == '1':
                 option_1_generations()
+            elif opcion_escogida == '2':
+                option_2_shape()    
+            
             
             continue
         except:
