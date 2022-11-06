@@ -48,11 +48,9 @@ class Book:
                     row = zip(keys, line)
                     row = dict(row)
                     Book.books.append(row)
-                str = ""
                 for book in Book.books:
                     book = book["Title"]
-                    str += f"El libro {book} fue agregado con exito!\n"
-                return str
+                    print(f"El libro {book} fue agregado con exito!")
         except:
             print('Ups! El formato que mando no parece el adecuado asegurese de ingresar un formato parecido al de "example.csv"\n'
             'que se encuentra en la misma carpeta de este repositorio de github. Tambien asegurese que contenga\n'
@@ -119,7 +117,7 @@ class Book:
             titles = list(map(lambda x:x["Title"], Book.books))
             ibns = list(map(lambda x: x["ISBN"], Book.books))
             def print_books(list, list_2):
-                str = " Libros -> IBMS\n"
+                str = " Libros -> IBNS\n"
                 for x, y in zip(list, list_2):
                     str += f" {x} -> {y}.\n"
                 return str
@@ -148,7 +146,8 @@ class Book:
                         f"Editorial: {publisher}\n"
                         f"Autor(es): {author}\n")
             except:
-                print("El libro no fue encontrado, si gustas puedes agregarlo en el menú de opciones.")
+                my_class = Book()
+                my_class.asnwer_add("buscar con ese nombre")
 
     def order_books(self):
         if len(Book.books) == 0:
@@ -215,32 +214,36 @@ class Book:
                         f"Editorial: {publisher}\n"
                         f"Autor(es): {author}\n")
             except:
-                print("El libro no fue encontrado, si gustas puedes agregarlo en el menú de opciones.")
+                my_class = Book()
+                my_class.asnwer_add("buscar con ese nombre")
     
     def find_books_numbers_autors(self):
         if len(Book.books) == 0:
             my_class = Book()
             my_class.asnwer_add("buscar")
         else:
-            num = input("Ingrese el número de autores:\n")
-            authors = list(map(lambda x: x["Author"], Book.books))
-            new_list = []
-            list_authors = []
-            for author in authors:
-                author_v2 = author.split(",")
-                if len(author_v2) == int(num):
-                    new_list.append(author_v2)
+            try:
+                num = input("Ingrese el número de autores:\n")
+                authors = list(map(lambda x: x["Author"], Book.books))
+                new_list = []
+                list_authors = []
+                for author in authors:
+                    author_v2 = author.split(",")
+                    if len(author_v2) == int(num):
+                        new_list.append(author_v2)
 
-            for x in range(len(new_list)):
-                var = ",".join(new_list[x])
-                find_books_number_authors = next(filter(lambda x:x["Author"] == var, Book.books))
-                list_authors.append(find_books_number_authors)
+                for x in range(len(new_list)):
+                    var = ",".join(new_list[x])
+                    find_books_number_authors = next(filter(lambda x:x["Author"] == var, Book.books))
+                    list_authors.append(find_books_number_authors)
 
-            books_filter = list(map(lambda x:x["Title"], list_authors))
+                books_filter = list(map(lambda x:x["Title"], list_authors))
 
-            my_class = Book()
-            print(f"Libros que tiene {num} autor(es):\n"
-                f"{my_class.print_books(books_filter)}")
+                my_class = Book()
+                print(f"Libros que tiene {num} autor(es):\n"
+                    f"{my_class.print_books(books_filter)}")
+            except:
+                print("No hay ningun libro con esa cantidad de autores")
     
     def update_books(self):
         if len(Book.books) == 0:
@@ -305,17 +308,32 @@ class Book:
                 
 
     def saved_books(self):
-        filename = input("Ingrese el tipo de extension en el cual desea guardar toda la informacion sobre sus libros:\n"
-                         "1) .txt\n"
-                         "2) .csv\n")
-        if filename == "1":
-            filename = ".txt"
+        if len(Book.books) == 0:
+            my_class = Book()
+            my_class.asnwer_add("guardar")
         else:
-            filename = ".csv"
-        with open(f"saved.{filename}", 'w') as csvfile:
-            csvwriter = csv.writer(csvfile)
-            csvwriter.writerows(Book.books)
-            print(f"La informacion de sus libros fue guarda en saved{filename}. Gracias por usar mi pograma!")
+                filename = input("Ingrese el tipo de extension en el cual desea guardar toda la informacion sobre sus libros:\n"
+                                "1) .txt\n"
+                                "2) .csv\n")
+                
+                while not filename in ("1", "2"):
+                    filename = input("Ingrese el tipo de extension en el cual desea guardar toda la informacion sobre sus libros:\n"
+                                "1) .txt\n"
+                                "2) .csv\n"
+                                "Escoja entre 1 o 2:\n")
+
+                if filename == "1":
+                    filename = ".txt"
+                else:
+                    filename = ".csv"
+                with open(f"saved.{filename}", 'w') as csvfile:
+                    csvwriter = csv.writer(csvfile)
+                    csvwriter.writerow(Book.books)
+                    list = []
+                    for book in Book.books:
+                        list.append(book.values())
+                    csvwriter.writerows(list)
+                    print(f"La informacion de sus libros fue guarda en saved{filename}, Gracias por usar mi pograma!")
        
     def continue_pogram(self):
         decision = input("¿Desea continuar el pograma? (Y/N)\n")
@@ -361,7 +379,7 @@ if __name__ == "__main__":
             
         if option == "1":
             my_class = Book()
-            print(my_class.read_archive())
+            my_class.read_archive()
             my_class.continue_pogram()
                 
         elif option == "2":
@@ -407,5 +425,6 @@ if __name__ == "__main__":
         else:
             my_class = Book()
             my_class.saved_books()
+            my_class.continue_pogram()
             
     run_pogram()
