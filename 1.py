@@ -12,6 +12,14 @@ class Book:
         self.publisher = publisher
         self.author = author
         
+    def print_books_info(self, title, gender, isbn, publisher, author):
+        print(f"Los datos del libro {title} son:\n"
+                f"Titulo: {title}\n"
+                f"Genero: {gender}\n"
+                f"ISBN: {isbn}\n"
+                f"Editorial: {publisher}\n"
+                f"Autor(es): {author}\n")
+
     def print_books(self, names):
         count = 1
         str_book = ""
@@ -60,10 +68,15 @@ class Book:
 
     def list_books(self):
         if len(Book.books) != 0:
-            books_list = list(map(lambda x:x["Title"], Book.books))
-            my_class = Book()
-            print("Los libros que tienes guardado son los siguientes:")
-            print(my_class.print_books(books_list))
+            #books_list = list(map(lambda x:x["Title"], Book.books))
+            #my_class = Book()
+            count = 1
+            print(f"Los libros que tienes guardado son {len(Book.books)}:")
+            for book in Book.books:
+                print(f"{count}° libro:")
+                my_class = Book()
+                my_class.print_books_info(book["Title"], book["Genre"], book["ISBN"], book["Publisher"], book["Author"])
+                count += 1
         else:
             my_class = Book()
             my_class.asnwer_add("listar")
@@ -139,12 +152,9 @@ class Book:
                 publisher = find_title[0]["Publisher"]
                 author = find_title[0]["Author"]
 
-                print(f"\nLos datos del libro {title} son:\n"
-                        f"Titulo: {title}\n"
-                        f"Genero: {gender}\n"
-                        f"ISBN: {isbn}\n"
-                        f"Editorial: {publisher}\n"
-                        f"Autor(es): {author}\n")
+                my_class = Book()
+                my_class.print_books_info(title, gender, isbn, publisher, author)
+
             except:
                 my_class = Book()
                 my_class.asnwer_add("buscar con ese nombre")
@@ -207,12 +217,8 @@ class Book:
                 publisher = find_title[0]["Publisher"]
                 author = find_title[0]["Author"]
 
-                print(f"\nLos datos del libro {title} son:\n"
-                        f"Titulo: {title}\n"
-                        f"Genero: {gender}\n"
-                        f"ISBN: {isbn}\n"
-                        f"Editorial: {publisher}\n"
-                        f"Autor(es): {author}\n")
+                my_class = Book()
+                my_class.print_books_info(title, gender, isbn, publisher, author)
             except:
                 my_class = Book()
                 my_class.asnwer_add("buscar con ese nombre")
@@ -358,8 +364,8 @@ class Book:
     
 if __name__ == "__main__":
     def run_pogram():
-        print("Bievenido a mi pograma:")
-        print("-"*10, "Menú", "-"*10)
+        print("Bienvenido a mi pograma:")
+        print("-"*30, "Menú", "-"*30)
         print("1) Leer archivo de disco duro (.txt o csv) que cargue 3 libros.\n"
               "2) Listar libros.\n"
               "3) Agregar libro.\n"
@@ -369,13 +375,14 @@ if __name__ == "__main__":
               "7) Buscar libros por autor, editorial o género..\n"
               "8) Buscar libros por número de autores.\n"
               "9) Editar o actualizar datos de un libro (título, género, ISBN, editorial y autores).\n"
-              "10) Guardar libros en archivo de disco duro (.txt o csv)")
+              "10) Guardar libros en archivo de disco duro (.txt o csv)\n"
+              "11) Salir.")
         option = input("Ingrese una de estas opciones:\n")
         
-        list_num = [str(i) for i in range(1, 11)]
+        list_num = [str(i) for i in range(1, 12)]
 
         while not option in list_num:
-            option = input("Ingrese el número de la opcion entre 1 y 10:\n")
+            option = input("Ingrese el número de la opcion entre 1 y 11:\n")
             
         if option == "1":
             my_class = Book()
@@ -422,9 +429,13 @@ if __name__ == "__main__":
             my_class.update_books()
             my_class.continue_pogram()
 
-        else:
+        elif option == "10":
             my_class = Book()
             my_class.saved_books()
             my_class.continue_pogram()
+        
+        else:
+            print("Espero que te haya gustado mi programa.")
+            exit()
             
     run_pogram()
