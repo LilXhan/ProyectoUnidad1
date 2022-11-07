@@ -45,16 +45,20 @@ def option_1_generations():
                 
                 # print Name, Url Image, Abilities
                 name = generation_data['pokemon_species'][i]['name']
-                r = requests.get(f'https://pokeapi.co/api/v2/pokemon/{name}')
-                poke_data = r.json()
-                name = poke_data['name']
-                image = poke_data['sprites']['other']['official-artwork']['front_default']
-                abilities = [i['ability']['name'] for i in poke_data['abilities']]  
-
+                url2 = f'https://pokeapi.co/api/v2/pokemon-species/{name}'
+                res2 = requests.get(url2)
+                data2 = res2.json()
+                result2 = data2.get('id')
+                url4 = f"https://pokeapi.co/api/v2/pokemon/{result2}"
+                res4 = requests.get(url4)
+                data4 = res4.json()
+                image = f'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{result2}.png'
+                abilities = [i['ability']['name'] for i in data4['abilities']]
                 print(f'name: {name}')
                 print(f'Image: {image}')
                 print(f'ability: {abilities}')
                 print('----------------------------------------------')
+            
         
         except:
             print('error')
@@ -82,18 +86,21 @@ def option_2_shape():
             result1 = data23.get('pokemon_species',[])
             
             if result1:
-                for i in result1:
-                    namePoke = i['name']
-                    url4 = f"https://pokeapi.co/api/v2/pokemon/{namePoke}"
+                for pokemon in result1:
+                    namePoke = pokemon['name']
+                    url2 = f'https://pokeapi.co/api/v2/pokemon-species/{namePoke}'
+                    res2 = requests.get(url2)
+                    data2 = res2.json()
+                    result2 = data2.get('id')
+                    url4 = f"https://pokeapi.co/api/v2/pokemon/{result2}"
                     res4 = requests.get(url4)
                     data4 = res4.json()
+                    image = f'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{result2}.png'
                     abilities = [i['ability']['name'] for i in data4['abilities']]
-                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{data4['id']}.png"
-                    
                     print(f'name: {namePoke}')
-                    print(f'ability: {abilities}')
                     print(f'Image: {image}')
-                    print('-----------------------------------------')
+                    print(f'ability: {abilities}')
+                    print('----------------------------------------------')
             
         except:
             print('error')
