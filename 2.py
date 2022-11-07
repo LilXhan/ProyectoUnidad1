@@ -1,5 +1,19 @@
 import requests
 
+def genePokemon(poke_data): #nueva funcion de listar pokemon
+    for i in poke_data['pokemon']:
+        poke_name = i['pokemon']['name']
+        url2 = f'https://pokeapi.co/api/v2/pokemon/{poke_name}'
+        req2 = requests.get(url2)
+        d2 = req2.json()         
+        # get image 
+        image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{d2['id']}.png"
+        abilities = [i['ability']['name'] for i in d2['abilities']]
+        print(f'name: {poke_name}')
+        print(f'Image: {image}')
+        print(f'ability: {abilities}')
+        print('----------------------------------------------')
+
 def option_1_generations(): 
     
     request = requests.get(f'https://pokeapi.co/api/v2/generation/?limit=10')
@@ -106,18 +120,7 @@ def option_3_ability():
             data23 = res.json()
             result1 = data23.get('pokemon',[])
             if result1:
-                for i in result1:
-                    namePoke = i['pokemon']['name']
-                    url4 = f"https://pokeapi.co/api/v2/pokemon/{namePoke}"
-                    res4 = requests.get(url4)
-                    data4 = res4.json()
-                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{data4['id']}.png"
-                    abilities = [i['ability']['name'] for i in data4['abilities']]
-                
-                    print(f'name: {namePoke}')
-                    print(f'Image: {image}')
-                    print(f'ability: {abilities}')
-                    print('-----------------------------------------')
+                genePokemon(data23)
             else:
                 print("Esta es una habilidad no oficial en la serie")
         
@@ -167,7 +170,7 @@ def option_4_habitat():
         except:
             print('error')       
             
-
+                  
 def option_5_type(): 
 
     request = requests.get(f'https://pokeapi.co/api/v2/type')
@@ -194,107 +197,12 @@ def option_5_type():
             d1 = req1.json()
             
             if len(d1['pokemon']) != 0:
-                for i in d1['pokemon']:
-                    poke_name = i['pokemon']['name']
-                    url2 = f'https://pokeapi.co/api/v2/pokemon/{poke_name}'
-                    req2 = requests.get(url2)
-                    d2 = req2.json()
-                    
-                    # get image 
-                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{d2['id']}.png"
-                    abilities = [i['ability']['name'] for i in d2['abilities']]
-                    
-                    print(f'name: {poke_name}')
-                    print(f'Image: {image}')
-                    print(f'ability: {abilities}')
-                    print('----------------------------------------------')
-            
+                genePokemon(d1)
             else:
-                print(f'no hay pokemones del tipo escogido')
-            
-        except:
-            print('error')
-    for count,i in enumerate(data['results']):
-        n = i['name']
-        print(f'nÂ°: {count+1} Tipo: {n}')
-    
-    continue_fun = True
-    while continue_fun == True:
-        try:
-            decision = input('Escribe el numero de habitat que quieres listar: ').lower()
-            if decision == 'exit':
-                continue_fun == False
-                break
-    
-            # get the url from the habitat selected
-            data_h = f'https://pokeapi.co/api/v2/pokemon-habitat/{decision}'
-            r = requests.get(data_h)
-            habitat_data = r.json()
-            data322 = habitat_data.get('pokemon_species', [])
-            
-            if data322:
-                for i in data322:
-                    poke_name = i['name']
-                    url4 = f'https://pokeapi.co/api/v2/pokemon/{poke_name}'
-                    req4 = requests.get(url4)
-                    d = req4.json()
-                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{d['id']}.png"
-                    abilities = [i['ability']['name'] for i in d['abilities']] 
-
-                    print(f'name: {poke_name}')
-                    print(f'Image: {image}')
-                    print(f'ability: {abilities}')
-                    print('----------------------------------------------')
-
-        except:
-            print('error')       
-            
-def option_5_type(): 
-
-    request = requests.get(f'https://pokeapi.co/api/v2/type')
-    data = request.json()
-    
-    # print the types 
-    for count,i in enumerate(data['results']):
-        n = i['name']
-        print(f'{count+1} Tipo: {n}')
-    
-    continue_fun = True
-    while continue_fun == True:
+                print("No hay pokemones del tipo escogido")
         
-        try: 
-            #print('Aviso: No hay pokemones de tipo "unknown" y "shadow"')
-            decision = input('Escribe el numero del TIPO de pokemon que quieres ver:').lower()
-            if decision == 'exit':
-                continue_fun == False
-                break
-            
-            #print pokemon data. name, url, image
-            url1 = f'https://pokeapi.co/api/v2/type/{decision}'
-            req1 = requests.get(url1)
-            d1 = req1.json()
-            
-            if len(d1['pokemon']) != 0:
-                for i in d1['pokemon']:
-                    poke_name = i['pokemon']['name']
-                    url2 = f'https://pokeapi.co/api/v2/pokemon/{poke_name}'
-                    req2 = requests.get(url2)
-                    d2 = req2.json()
-                    
-                    # get image 
-                    image = f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{d2['id']}.png"
-                    abilities = [i['ability']['name'] for i in d2['abilities']]
-                    
-                    print(f'name: {poke_name}')
-                    print(f'Image: {image}')
-                    print(f'ability: {abilities}')
-                    print('----------------------------------------------')
-            
-            else:
-                print(f'no hay pokemones del tipo escogido')
-            
         except:
-            print('error')
+            print("error")
 
 def main():
     
