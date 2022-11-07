@@ -313,7 +313,13 @@ def main():
             elif opcion_escogida == '2':
                 option_2_shape()    
             elif opcion_escogida == '3':
-                option_3_ability() 
+                option_3_ability()
+            elif opcion_escogida == '4':
+                option_4_habitat()
+            elif opcion_escogida == '5':
+                option_5_type()
+            elif opcion_escogida == 'exit':
+                break                 
             
             continue
         except:
